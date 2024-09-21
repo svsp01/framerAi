@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
-import image1 from '@/assets/potrait/girl side.jpg'
+import image1 from '@/assets/potrait/girlsq.jpg'
 import image2 from '@/assets/potrait/girl side.jpg'
 import image3 from '@/assets/potrait/girl side.jpg'
 
@@ -39,13 +39,13 @@ const TestimonialsSection = () => {
     }, [])
 
     return (
-        <section id="testimonials" className="py-20 bg-gray-50">
+        <section id="testimonials" className="py-20 bg-gray-100 border-b">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <motion.h2
                     initial={{ opacity: 0, y: -20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5 }}
-                    className="text-3xl font-extrabold text-gray-900 text-center mb-12"
+                    className="text-3xl font-extrabold text-transparent font-mono bg-clip-text bg-gradient-to-r from-blue-500 to-purple-600 text-center mb-12"
                 >
                     What Our Customers Say
                 </motion.h2>

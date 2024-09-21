@@ -27,13 +27,13 @@ const features = [
 
 const FeaturesSection = () => {
   return (
-    <section id="features" className="py-20 bg-gray-50">
+    <section id="features" className="py-20  bg-gray-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.h2
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="text-3xl font-extrabold text-gray-900 text-center mb-12"
+          className="text-3xl font-extrabold text-transparent font-mono bg-clip-text bg-gradient-to-r from-blue-500 to-purple-600 text-center mb-12"
         >
           Our Core Features
         </motion.h2>
@@ -44,10 +44,10 @@ const FeaturesSection = () => {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="bg-white p-6 rounded-lg shadow-md"
+              className="bg-gradient-to-tr from-black to-gray-800 p-6 rounded-lg shadow-md"
             >
               <feature.icon className="h-12 w-12 text-blue-500 mb-4" />
-              <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
+              <h3 className="text-xl text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-600 animate-text font-semibold mb-2">{feature.title}</h3>
               <p className="text-gray-600">{feature.description}</p>
             </motion.div>
           ))}

@@ -25,13 +25,13 @@ const GallerySection = () => {
     const [selectedImage, setSelectedImage] = useState<any>(null);
 
     return (
-        <section id="gallery" className="py-20 bg-white">
+        <section id="gallery" className="py-20 bg-white border-y-2">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <motion.h2
                     initial={{ opacity: 0, y: -20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5 }}
-                    className="text-3xl font-extrabold text-gray-900 text-center mb-12"
+                    className="text-3xl font-extrabold text-transparent font-mono bg-clip-text bg-gradient-to-r from-blue-500 to-purple-600 text-center mb-12"
                 >
                     AI-Generated Art Gallery
                 </motion.h2>
@@ -42,20 +42,20 @@ const GallerySection = () => {
                             initial={{ opacity: 0, scale: 0.9 }}
                             whileInView={{ opacity: 1, scale: 1 }}
                             transition={{ duration: 0.5, delay: index * 0.1 }}
-                            className="relative aspect-w-1 aspect-h-1 rounded-lg overflow-hidden group h-64" // Set height
+                            className="relative shadow-xl  aspect-w-1 aspect-h-1 rounded-lg overflow-hidden group h-64" // Set height
                         >
                             <Image
                                 src={image.src}
                                 alt={image.alt}
                                 layout="fill" // Correct layout for filling
                                 objectFit="cover"
-                                className="transition-transform duration-300 group-hover:scale-110"
+                                className="transition-transform  duration-300 group-hover:scale-110"
                                 loading="lazy"
                             />
                             <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-50 transition-opacity duration-300 flex items-center justify-center">
                                 <button
                                     onClick={() => setSelectedImage(image)}
-                                    className="text-white font-semibold py-2 px-4 rounded-full bg-blue-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                                    className="text-white font-semibold py-2 px-4 rounded-full bg-gradient-to-r  from-blue-600  to-purple-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                                 >
                                     View Details
                                 </button>

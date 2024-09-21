@@ -75,7 +75,7 @@ const SideNav = () => {
   </div>
     }
 
-      <Button size="sm" className="outline mb-4 bg-gradient-to-r flex gap-2 items-center mx-2 from-blue-600  to-purple-600">
+      <Button size="sm" className="outline mb-4 flex gap-2 items-center mx-2 bg-gradient-to-r  from-blue-600  to-purple-600">
         <Crown className="w-4 h-4 " />
         {isExpanded &&
           "Upgrade to Premium"

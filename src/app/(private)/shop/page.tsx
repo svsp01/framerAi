@@ -1,87 +1,206 @@
 "use client"
-import React, { useState } from 'react';
-import { ShoppingCart, ArrowLeft, ArrowRight } from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+
+import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import { ShoppingCart, Heart, Crown, Sparkles, X } from 'lucide-react';
+import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
+import { Badge } from '@/components/ui/badge';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetFooter } from '@/components/ui/sheet';
+import { Separator } from '@/components/ui/separator';
+import { toast, Toaster } from 'react-hot-toast';
 
-const OrderNow = () => {
-  const [step, setStep] = useState(1);
+interface Product {
+    id: number;
+    name: string;
+    price: number;
+    image: string;
+    isPremium: boolean;
+    category: 'tshirt' | 'phoneCase' | 'laptopSkin' | 'poster' | 'frame';
+}
 
-  const nextStep = () => setStep(step + 1);
-  const prevStep = () => setStep(step - 1);
+const AIArtShop: React.FC = () => {
+    const [products, setProducts] = useState<Product[]>([]);
+    const [cart, setCart] = useState<Product[]>([]);
+    const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+    const [isProductModalOpen, setIsProductModalOpen] = useState(false);
+    const [isCartOpen, setIsCartOpen] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
 
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-900 to-indigo-800 text-white p-8">
-      <header className="flex justify-between items-center mb-12">
-        <h1 className="text-4xl font-bold">Order Your AI Creation</h1>
-        <Button variant="outline" className="text-white border-white hover:bg-white hover:text-purple-900">
-          <ShoppingCart className="mr-2" /> Cart (0)
-        </Button>
-      </header>
+    useEffect(() => {
+        // Simulating API call
+        setTimeout(() => {
+            const generateProducts = (): Product[] => {
+                const categories = ['tshirt', 'phoneCase', 'laptopSkin', 'poster', 'frame'];
+                return Array(50).fill(null).map((_, i) => ({
+                    id: i + 1,
+                    name: `AI Art ${categories[i % 5].charAt(0).toUpperCase() + categories[i % 5].slice(1)} #${i + 1}`,
+                    price: Math.floor(Math.random() * 50) + 20,
+                    image: `/api/placeholder/${300 + i}/${300 + i}`,
+                    isPremium: Math.random() > 0.7,
+                    category: categories[i % 5] as Product['category'],
+                }));
+            };
 
-      <div className="max-w-4xl mx-auto">
-        <Card className="bg-gray-800 border-gray-700">
-          <CardHeader>
-            <CardTitle className="text-2xl">Step {step} of 3</CardTitle>
-          </CardHeader>
-          <CardContent>
-            {step === 1 && (
-              <div>
-                <h2 className="text-xl mb-4">Choose Your Image</h2>
-                <div className="grid grid-cols-3 gap-4">
-                  {[1, 2, 3, 4, 5, 6].map((i) => (
-                    <div key={i} className="aspect-square bg-gray-700 rounded-lg cursor-pointer hover:ring-2 hover:ring-white"></div>
-                  ))}
+            setProducts(generateProducts());
+            setIsLoading(false);
+        }, 1500);
+    }, []);
+
+    const addToCart = (product: Product) => {
+        setCart([...cart, product]);
+        toast.success('Added to cart!');
+    };
+
+    const removeFromCart = (productId: number) => {
+        setCart(cart.filter(item => item.id !== productId));
+        toast.success('Removed from cart!');
+    };
+
+    const openProductModal = (product: Product) => {
+        setSelectedProduct(product);
+        setIsProductModalOpen(true);
+    };
+
+    const handleOrder = () => {
+        toast.success('Order received! Our representative will contact you via email.');
+        setCart([]);
+        setIsCartOpen(false);
+    };
+
+    const renderProductSection = (title: string, products: Product[]) => (
+        <div className="mb-8">
+            <h2 className="text-2xl font-bold mb-4">{title}</h2>
+            <ScrollArea className="w-full whitespace-nowrap rounded-md border border-gray-700">
+                <div className="flex w-max space-x-4 p-4">
+                    {products.map(product => (
+                        <motion.div
+                            key={product.id}
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                        >
+                            <Card className="w-48 bg-gray-800 border-gray-700 cursor-pointer relative overflow-hidden group">
+                                <CardContent className="p-0">
+                                    <img src={product.image} alt={product.name} className="w-full h-48 object-cover" />
+                                    <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
+                                        <p className="text-sm mb-2">{product.name}</p>
+                                        <p className="text-sm mb-2">${product.price.toFixed(2)}</p>
+                                        {product.isPremium && (
+                                            <Badge className="absolute top-2 right-2 bg-yellow-500 text-black">
+                                                <Crown className="w-3 h-3 mr-1" /> Premium
+                                            </Badge>
+                                        )}
+                                        <Button size="sm" onClick={() => addToCart(product)}>Add to Cart</Button>
+                                        <Button size="sm" variant="outline" className="mt-2" onClick={() => openProductModal(product)}>View Details</Button>
+                                    </div>
+                                </CardContent>
+                            </Card>
+                        </motion.div>
+                    ))}
                 </div>
-              </div>
-            )}
-            {step === 2 && (
-              <div>
-                <h2 className="text-xl mb-4">Select Frame and Size</h2>
-                <div className="grid grid-cols-2 gap-4">
-                  <Button variant="outline" className="h-20">Classic Frame</Button>
-                  <Button variant="outline" className="h-20">Modern Frame</Button>
-                  <Button variant="outline" className="h-20">Canvas Print</Button>
-                  <Button variant="outline" className="h-20">Poster</Button>
-                </div>
-              </div>
-            )}
-            {step === 3 && (
-              <div>
-                <h2 className="text-xl mb-4">Review and Checkout</h2>
-                <div className="flex space-x-4">
-                  <div className="w-1/2 aspect-square bg-gray-700 rounded-lg"></div>
-                  <div className="w-1/2">
-                    <p className="mb-2">Selected Image: AI Creation #1234</p>
-                    <p className="mb-2">Frame: Classic Frame</p>
-                    <p className="mb-2">Size: 18" x 24"</p>
-                    <p className="text-2xl font-bold mt-4">Total: $129.99</p>
-                  </div>
-                </div>
-              </div>
-            )}
-          </CardContent>
-        </Card>
-
-        <div className="flex justify-between mt-8">
-          {step > 1 && (
-            <Button onClick={prevStep} className="bg-gray-700 hover:bg-gray-600">
-              <ArrowLeft className="mr-2" /> Previous
-            </Button>
-          )}
-          {step < 3 ? (
-            <Button onClick={nextStep} className="bg-blue-500 hover:bg-blue-600 ml-auto">
-              Next <ArrowRight className="ml-2" />
-            </Button>
-          ) : (
-            <Button className="bg-green-500 hover:bg-green-600 ml-auto">
-              Complete Order <ShoppingCart className="ml-2" />
-            </Button>
-          )}
+                <ScrollBar orientation="horizontal" />
+            </ScrollArea>
         </div>
-      </div>
-    </div>
-  );
+    );
+
+    return (
+        <div className="min-h-screen bg-gradient-to-br from-purple-900 to-indigo-800 text-white p-8">
+            <Toaster position="top-right" />
+            <header className="flex justify-between items-center mb-12">
+                <h1 className="text-4xl font-bold">AI Art Shop</h1>
+                <Button variant="outline" className="text-white border-white hover:bg-white hover:text-purple-900" onClick={() => setIsCartOpen(true)}>
+                    <ShoppingCart className="mr-2" /> Cart ({cart.length})
+                </Button>
+            </header>
+
+            {isLoading ? (
+                <div className="flex justify-center items-center h-64">
+                    <motion.div
+                        animate={{ rotate: 360 }}
+                        transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                    >
+                        <Sparkles className="w-16 h-16 text-blue-400" />
+                    </motion.div>
+                </div>
+            ) : (
+                <>
+                    {renderProductSection("Premium AI Art", products.filter(p => p.isPremium))}
+                    {renderProductSection("T-Shirts", products.filter(p => p.category === 'tshirt'))}
+                    {renderProductSection("Phone Cases", products.filter(p => p.category === 'phoneCase'))}
+                    {renderProductSection("Laptop Skins", products.filter(p => p.category === 'laptopSkin'))}
+                    {renderProductSection("Posters", products.filter(p => p.category === 'poster'))}
+                    {renderProductSection("Frames", products.filter(p => p.category === 'frame'))}
+                </>
+            )}
+
+            <Dialog open={isProductModalOpen} onOpenChange={setIsProductModalOpen}>
+                <DialogContent className="bg-gray-800 border-gray-700">
+                    <DialogHeader>
+                        <DialogTitle>Product Details</DialogTitle>
+                    </DialogHeader>
+                    {selectedProduct && (
+                        <div className="space-y-4">
+                            <img src={selectedProduct.image} alt={selectedProduct.name} className="w-full h-64 object-cover rounded-md" />
+                            <h3 className="text-xl font-bold">{selectedProduct.name}</h3>
+                            <p>${selectedProduct.price.toFixed(2)}</p>
+                            {selectedProduct.isPremium && (
+                                <Badge className="bg-yellow-500 text-black">
+                                    <Crown className="w-3 h-3 mr-1" /> Premium
+                                </Badge>
+                            )}
+                            <Button className="w-full" onClick={() => addToCart(selectedProduct)}>Add to Cart</Button>
+                        </div>
+                    )}
+                </DialogContent>
+            </Dialog>
+
+            <Sheet open={isCartOpen} onOpenChange={setIsCartOpen}>
+                <SheetContent className="bg-gray-800 h-screen border-gray-700 py-10 text-white">
+                    <SheetHeader>
+                        <SheetTitle className="text-white">Your Cart</SheetTitle>
+                    </SheetHeader>
+                    <div className="mt-6 flex flex-col h-[calc(h-[100vh]-[100px])]">
+
+
+                        <div className="flex-grow overflow-y-auto">
+                            {cart.length === 0 ? (
+                                <p>Your cart is empty.</p>
+                            ) : (
+                                cart.map(item => (
+                                    <div key={item.id} className="flex items-center justify-between py-4">
+                                        <div className="flex items-center space-x-4">
+                                            <img src={item.image} alt={item.name} className="w-16 h-16 object-cover rounded" />
+                                            <div>
+                                                <p className="font-semibold">{item.name}</p>
+                                                <p className="text-sm text-gray-400">${item.price.toFixed(2)}</p>
+                                            </div>
+                                        </div>
+                                        <Button variant="ghost" size="icon" onClick={() => removeFromCart(item.id)}>
+                                            <X className="h-4 w-4" />
+                                        </Button>
+                                    </div>
+                                ))
+                            )}
+                        </div>
+                        <Separator className="my-4" />
+                        <div className="flex justify-between items-center ">
+                            <span className="font-bold">Total:</span>
+                            <span className="font-bold">${cart.reduce((sum, item) => sum + item.price, 0).toFixed(2)}</span>
+                        </div>
+                        <Button
+                            className="w-full"
+                            onClick={handleOrder}
+                            disabled={cart.length === 0}
+                        >
+                            Order Now
+                        </Button>
+                    </div>
+                </SheetContent>
+            </Sheet>
+        </div>
+    );
 };
 
-export default OrderNow;
+export default AIArtShop;
