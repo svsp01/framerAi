@@ -84,9 +84,9 @@ const TrainYourModel: React.FC = () => {
     };
 
     return (
-        <div className="min-h-screen bg-black border border-gray-50 rounded-xl text-white p-8">
-            <header className="flex justify-between items-center mb-12">
-                <h1 className="text-4xl font-bold">Train Your AI Model</h1>
+        <div className="min-h-screen bg-black border border-gray-50 rounded-xl text-white p-4">
+                <h1 className="text-2xl w-full flex  justify-center text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-600 animate-text font-mono font-bold">Train Your AI Model</h1>
+            <header className="flex justify-end items-center mb-12">
                 <Select onValueChange={setModelType} value={modelType}>
                     <SelectTrigger className="w-[180px] bg-white/10 border-white/20 text-white">
                         <SelectValue placeholder="Select Model" />

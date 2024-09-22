@@ -81,10 +81,10 @@ const AIArtShop: React.FC = () => {
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
                         >
-                            <Card className="w-48 bg-gray-800 border-gray-700 cursor-pointer relative overflow-hidden group">
+                            <Card className="w-48 bg-gray-800  border-gray-700 cursor-pointer relative overflow-hidden group">
                                 <CardContent className="p-0">
                                     <img src={product.image} alt={product.name} className="w-full h-48 object-cover" />
-                                    <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
+                                    <div className="absolute text-gray-400 inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
                                         <p className="text-sm mb-2">{product.name}</p>
                                         <p className="text-sm mb-2">${product.price.toFixed(2)}</p>
                                         {product.isPremium && (
@@ -106,10 +106,10 @@ const AIArtShop: React.FC = () => {
     );
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-purple-900 to-indigo-800 text-white p-8">
+        <div className="min-h-screen bg-black border rounded-xl text-white p-8">
             <Toaster position="top-right" />
-            <header className="flex justify-between items-center mb-12">
-                <h1 className="text-4xl font-bold">AI Art Shop</h1>
+            <h1 className="text-2xl w-full flex justify-center text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-600 animate-text font-mono font-bold">AI Art Shop</h1>
+            <header className="flex justify-end items-center mb-12">
                 <Button variant="outline" className="text-white border-white hover:bg-white hover:text-purple-900" onClick={() => setIsCartOpen(true)}>
                     <ShoppingCart className="mr-2" /> Cart ({cart.length})
                 </Button>
@@ -121,7 +121,9 @@ const AIArtShop: React.FC = () => {
                         animate={{ rotate: 360 }}
                         transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
                     >
-                        <Sparkles className="w-16 h-16 text-blue-400" />
+                        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-white"></div>
+
+                        {/* <Sparkles className="w-16 h-16 text-blue-400" /> */}
                     </motion.div>
                 </div>
             ) : (
@@ -141,7 +143,7 @@ const AIArtShop: React.FC = () => {
                         <DialogTitle>Product Details</DialogTitle>
                     </DialogHeader>
                     {selectedProduct && (
-                        <div className="space-y-4">
+                        <div className="space-y-4 ">
                             <img src={selectedProduct.image} alt={selectedProduct.name} className="w-full h-64 object-cover rounded-md" />
                             <h3 className="text-xl font-bold">{selectedProduct.name}</h3>
                             <p>${selectedProduct.price.toFixed(2)}</p>

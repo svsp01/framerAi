@@ -6,10 +6,10 @@ import { Button } from '@/components/ui/button';
 const Dashboard = () => {
   return (
     <div className="min-h-screen bg-black border border-white rounded-xl text-white p-6">
-      <header className="flex justify-between items-center mb-12">
-        <h1 className="text-4xl font-bold">AI Image Studio</h1>
-        <Button variant="outline" size="sm" className="text-white flex gap-2 items-center border-white hover:bg-white hover:text-gray-900">
-          <Crown className='w-4 h-4'/>
+        <h1 className="text-2xl font-mono text-transparent bg-clip-text bg-gradient-to-r from-blue-500 w-full flex justify-center to-purple-600 animate-text font-bold">AI Image Studio</h1>
+      <header className="flex justify-end items-center mb-12">
+        <Button variant="outline" size="sm" className="text-transparent border-purple-600 bg-clip-text bg-gradient-to-r from-blue-500  to-purple-600 animate-text  flex gap-2 items-center  hover:bg-white ">
+          <Crown className='w-4 h-4 text-purple-400'/>
           Upgrade to Premium
         </Button>
       </header>
