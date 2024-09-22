@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { toast } from 'react-hot-toast';
 
 // Create an instance of axios
@@ -18,6 +18,43 @@ apiClient.interceptors.request.use(
     },
     (error) => {
         toast.error('Request failed, please try again.');
+        return Promise.reject(error);
+    }
+);
+
+apiClient.interceptors.request.use(
+    (config: any) => {
+        const token = localStorage.getItem('token');
+
+        if (config.url?.includes('/api/upload')) {
+            config.timeout = 120000;
+        }
+
+        if (token) {
+            config.headers['authorization'] = `Bearer ${token}`;
+        }
+
+        return config;
+    },
+    (error: AxiosError) => {
+        return Promise.reject(error);
+    }
+);
+apiClient.interceptors.request.use(
+    (config: any) => {
+        const token = localStorage.getItem('token');
+
+        if (config.url?.includes('/api/chat')) {
+            config.timeout = 120000;
+        }
+
+        if (token) {
+            config.headers['authorization'] = `Bearer ${token}`;
+        }
+
+        return config;
+    },
+    (error: AxiosError) => {
         return Promise.reject(error);
     }
 );
