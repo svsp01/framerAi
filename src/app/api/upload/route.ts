@@ -49,9 +49,9 @@ import os from 'os'; // For cross-platform temp directory
 
 // Cloudinary configuration
 cloudinary.config({
-    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-    api_key: process.env.CLOUDINARY_API_KEY,
-    api_secret: process.env.CLOUDINARY_API_SECRET,
+    cloud_name: process.env.NEXT_CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.NEXT_CLOUDINARY_API_KEY,
+    api_secret: process.env.NEXT_CLOUDINARY_API_SECRET,
 });
 
 // Helper function to upload a file to Cloudinary
