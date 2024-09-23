@@ -203,12 +203,13 @@ const Chat = () => {
             setError(null);
 
             try {
-                const response = await aiService.chat({ prompt: input });
+                const response:any = await aiService.chat({ prompt: input });
+                console.log(response, ">>>>>>>>>")
                 setMessages((prev: any) => [
                     ...prev,
                     {
                         type: 'image',
-                        content: response.data.imageUrl,
+                        content: response?.imageUrl,
                         actions: {
                             like: false,
                             dislike: false,
@@ -256,7 +257,7 @@ const Chat = () => {
                                     <CardContent className="p-3">
                                         {message.type === 'image' ? (
                                             <div>
-                                                <img src={message.content} alt="AI generated" className="w-full h-auto rounded-md mb-2" />
+                                                <img src={message.content} alt="AI generated" className="w-24 h-24 rounded-md mb-2" />
                                                 <div className="flex justify-between mt-2">
                                                     {[
                                                         { icon: ThumbsUp, label: 'Like', action: 'like', color: 'text-green-400', fill: "green" },
