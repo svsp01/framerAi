@@ -255,6 +255,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { motion, AnimatePresence } from "framer-motion";
 import axios from "axios";
 import aiService from "@/services/aiService";
+import { useRouter } from "next/navigation";
 
 interface FileWithPreview extends File {
     preview: string;
@@ -271,6 +272,8 @@ const FaceTraining: React.FC = () => {
     const [imageUrl, setImageUrl] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [hasTrainedData, setHasTrainedData] = useState<boolean>(false);
+    const router = useRouter();
+
 
     const fetchData = useCallback(async () => {
         try {
@@ -537,7 +540,7 @@ const FaceTraining: React.FC = () => {
                                         <h2 className="text-3xl font-bold mb-4">Training Complete!</h2>
                                         <p className="text-xl mb-8">Your AI face model is now ready to create magic!</p>
                                         <Button
-                                            onClick={() => console.log("Navigating to /chat")}
+                                            onClick={() => router.push("/chat")}
                                             className="w-1/3 flex gap-2 items-center justify-center bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700 text-lg py-4 rounded-xl shadow-lg"
                                         >
                                             Go to AI Chat

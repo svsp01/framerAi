@@ -173,7 +173,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Card, CardContent } from "@/components/ui/card";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import axios from 'axios';
 import aiService from '@/services/aiService';
 
 const Chat = () => {
@@ -182,10 +181,10 @@ const Chat = () => {
     const [isGenerating, setIsGenerating] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [suggestions] = useState([
-        { text: "Create a surreal landscape", emoji: "🌄" },
-        { text: "Design a futuristic cityscape", emoji: "🏙️" },
-        { text: "Generate an abstract portrait", emoji: "🎨" },
-        { text: "Illustrate a magical forest scene", emoji: "🌳" }
+        { text: "A Man standing in a surreal landscape", emoji: "🌄" },
+        { text: "A Man in a futuristic cityscape", emoji: "🏙️" },
+        { text: "A Man in an abstract portrait", emoji: "🎨" },
+        { text: "A Man in a magical forest scene", emoji: "🌳" }
     ]);
     const scrollAreaRef = useRef<any>(null);
 
@@ -257,7 +256,7 @@ const Chat = () => {
                                     <CardContent className="p-3">
                                         {message.type === 'image' ? (
                                             <div>
-                                                <img src={message.content} alt="AI generated" className="w-24 h-24 rounded-md mb-2" />
+                                                <img src={message.content} alt="AI generated" className=" rounded-md mb-2" />
                                                 <div className="flex justify-between mt-2">
                                                     {[
                                                         { icon: ThumbsUp, label: 'Like', action: 'like', color: 'text-green-400', fill: "green" },
