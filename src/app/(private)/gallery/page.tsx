@@ -248,7 +248,7 @@ const NoDataFound: React.FC = () => (
 );
 
 const Gallery: React.FC = () => {
-    const [selectedImage, setSelectedImage] = useState<ImageData | null>(null);
+    const [selectedImage, setSelectedImage] = useState<any | null>(null);
     const [filter, setFilter] = useState<string>('all');
     const [searchTerm, setSearchTerm] = useState<string>('');
     const [images, setImages] = useState<ImageData[]>([]);
@@ -270,7 +270,7 @@ const Gallery: React.FC = () => {
         fetchImages();
     }, []);
 
-    const filteredImages = images?.filter(img =>
+    const filteredImages = images?.filter((img:any) =>
         (filter === 'all' || img.category === filter) &&
         (
             // img.prompt.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -345,7 +345,7 @@ const Gallery: React.FC = () => {
                     transition={{ duration: 0.5 }}
                 >
                     <AnimatePresence>
-                        {filteredImages.map((image) => (
+                        {filteredImages.map((image:any) => (
                             <motion.div
                                 key={image.id}
                                 layout

@@ -1,3 +1,10 @@
+// {
+//   "extends": ["next/core-web-vitals", "next/typescript"]
+// }
 {
-  "extends": ["next/core-web-vitals", "next/typescript"]
+  "extends": "next/core-web-vitals",
+  "rules": {
+    "no-unused-vars": "off",      // Example: disable 'no-unused-vars' rule
+    "react/react-in-jsx-scope": "off" // Example: disable React import in JSX
+  }
 }
